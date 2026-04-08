@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "biz.kannai.com"
+        }
+      ],
+      "destination": "/business/:path*"
+    }
+  ]
+}
