@@ -1,4 +1,19 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 export default function DashboardPage() {
+  const [dispensaryName, setDispensaryName] = useState('Your Dispensary');
+
+  useEffect(() => {
+    const stored = localStorage.getItem('biz_session');
+    if (stored) {
+      try {
+        const session = JSON.parse(stored);
+        setDispensaryName(session.dispensaryName);
+      } catch {}
+    }
+  }, []);
   const stats = [
     { label: 'Total Products', value: '24', change: '+3 this week', icon: '📦' },
     { label: 'Views This Week', value: '1,247', change: '+12%', icon: '👁️' },
@@ -20,7 +35,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-2xl font-bold" style={{ color: 'var(--kanna-text)' }}>Dashboard</h1>
           <p className="text-sm mt-1" style={{ color: 'var(--kanna-text-secondary)' }}>
-            Welcome back, GreenLeaf Dispensary
+            Welcome back, {dispensaryName}
           </p>
         </div>
         <div className="flex gap-3">

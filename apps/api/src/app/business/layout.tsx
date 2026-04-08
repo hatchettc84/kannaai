@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const navItems = [
   { href: '/business', label: 'Dashboard', icon: '📊' },
@@ -13,13 +13,61 @@ const navItems = [
   { href: '/business/settings', label: 'Settings', icon: '⚙️' },
 ];
 
+interface BizSession {
+  email: string;
+  dispensaryId: string;
+  dispensaryName: string;
+  city: string;
+  loggedInAt: string;
+}
+
 export default function BusinessLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [session, setSession] = useState<BizSession | null>(null);
+  const [checked, setChecked] = useState(false);
 
+  useEffect(() => {
+    const stored = localStorage.getItem('biz_session');
+    if (stored) {
+      try {
+        setSession(JSON.parse(stored));
+      } catch {
+        localStorage.removeItem('biz_session');
+      }
+    }
+    setChecked(true);
+  }, [pathname]);
+
+  // Login page — no auth required
   if (pathname === '/business/login') {
     return <>{children}</>;
   }
+
+  // Not checked yet — show nothing to prevent flash
+  if (!checked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--kanna-bg)' }}>
+        <span className="text-2xl">🌿</span>
+      </div>
+    );
+  }
+
+  // Not logged in — redirect to login
+  if (!session) {
+    router.replace('/business/login');
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--kanna-bg)' }}>
+        <span className="text-2xl">🌿</span>
+      </div>
+    );
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('biz_session');
+    router.push('/business/login');
+  };
 
   return (
     <div className="flex h-screen" style={{ background: 'var(--kanna-bg)' }}>
@@ -61,10 +109,19 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
           })}
         </nav>
 
-        {/* Dispensary info */}
-        <div className="px-6 py-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-          <p className="text-sm font-semibold" style={{ color: 'var(--kanna-text)' }}>GreenLeaf Dispensary</p>
-          <p className="text-xs" style={{ color: 'var(--kanna-text-secondary)' }}>Los Angeles, CA</p>
+        {/* Dispensary info + logout */}
+        <div className="px-4 py-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+          <div className="px-2 mb-3">
+            <p className="text-sm font-semibold" style={{ color: 'var(--kanna-text)' }}>{session.dispensaryName}</p>
+            <p className="text-xs" style={{ color: 'var(--kanna-text-secondary)' }}>{session.city}</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 rounded-xl text-xs font-semibold text-left"
+            style={{ color: 'var(--kanna-error)' }}
+          >
+            Sign Out
+          </button>
         </div>
       </aside>
 
@@ -88,7 +145,7 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
             <span className="text-lg">☰</span>
           </button>
           <span className="text-lg">🌿</span>
-          <span className="font-bold" style={{ color: 'var(--kanna-text)' }}>Kanna for Business</span>
+          <span className="font-bold text-sm" style={{ color: 'var(--kanna-text)' }}>{session.dispensaryName}</span>
         </div>
 
         <div className="p-6 md:p-8">
