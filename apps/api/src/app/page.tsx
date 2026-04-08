@@ -27,7 +27,7 @@ export default function Home() {
             Kanna for Business →
           </Link>
           <a
-            href="https://kannaai.com"
+            href="https://www.kannai.com"
             className="px-6 py-3 rounded-2xl text-sm font-semibold inline-block"
             style={{ background: 'var(--kanna-surface)', color: 'var(--kanna-text)' }}
           >
