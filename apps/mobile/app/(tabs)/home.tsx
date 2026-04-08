@@ -44,14 +44,20 @@ function ProductCardSmall({ product }: { product: Product }) {
       className="w-40 mr-3 rounded-2xl overflow-hidden"
       style={{ backgroundColor: '#D4E8CD' }}
     >
-      {/* THC/CBD header */}
+      {/* THC/CBD header + promoted badge */}
       <View className="flex-row justify-between px-3 pt-2">
         <Text className="text-[10px] font-semibold" style={{ color: '#4A6741' }}>
           {product.thcContent != null ? `THC ${product.thcContent}%` : ''}
         </Text>
-        <Text className="text-[10px] font-semibold" style={{ color: '#4A6741' }}>
-          {product.cbdContent != null ? `CBD ${product.cbdContent}` : ''}
-        </Text>
+        {product.promoted ? (
+          <View className="px-1.5 py-0.5 rounded" style={{ backgroundColor: '#D4A843' }}>
+            <Text className="text-[8px] font-bold text-white">AD</Text>
+          </View>
+        ) : (
+          <Text className="text-[10px] font-semibold" style={{ color: '#4A6741' }}>
+            {product.cbdContent != null ? `CBD ${product.cbdContent}` : ''}
+          </Text>
+        )}
       </View>
       {/* Image */}
       <View className="h-24 items-center justify-center px-2">
@@ -113,8 +119,11 @@ export default function HomeScreen() {
   const city = useLocationStore((s) => s.city) || 'Your area';
   const [activeBanner, setActiveBanner] = useState(0);
 
-  const popularItems = mockProducts.slice(0, 5);
-  const featuredItems = mockProducts.slice(3, 7);
+  // Promoted products go first in popular, then nearest dispensary products
+  const promotedItems = mockProducts.filter(p => p.promoted);
+  const nearbyItems = mockProducts.filter(p => !p.promoted && p.dispensaryId === 'd1'); // nearest dispensary
+  const popularItems = [...promotedItems, ...nearbyItems].slice(0, 6);
+  const featuredItems = mockProducts.filter(p => p.dispensaryId === 'd1' || p.promoted).slice(0, 4);
 
   return (
     <SafeAreaView className="flex-1 bg-kanna-bg" edges={['top']}>

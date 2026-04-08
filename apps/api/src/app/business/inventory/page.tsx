@@ -10,21 +10,22 @@ interface InventoryItem {
   price: number;
   thc: string;
   inStock: boolean;
+  promoted: boolean;
 }
 
 const initialInventory: InventoryItem[] = [
-  { id: '1', name: 'Blue Dream Premium Flower', category: 'Flower', brand: 'Cookies', price: 40, thc: '21%', inStock: true },
-  { id: '2', name: 'Watermelon Gummies 100mg', category: 'Edibles', brand: 'Kanha', price: 22, thc: '100mg', inStock: true },
-  { id: '3', name: 'Blood Orange Cardamom', category: 'Drinks', brand: 'Cann', price: 6, thc: '2mg', inStock: true },
-  { id: '4', name: 'Persy Live Rosin', category: 'Concentrates', brand: '710 Labs', price: 75, thc: '78%', inStock: true },
-  { id: '5', name: 'The Indica Smokes 6-Pack', category: 'Pre-rolls', brand: 'Lowell Farms', price: 38, thc: '24%', inStock: true },
-  { id: '6', name: 'Releaf Balm 1:3 CBD', category: 'Topicals', brand: 'Papa & Barkley', price: 34, thc: '60mg', inStock: true },
-  { id: '7', name: '1:1 CBD:THC Drops', category: 'Tinctures', brand: 'Care By Design', price: 38, thc: '150mg', inStock: true },
-  { id: '8', name: 'LIIIL STIIIZY Starter Kit', category: 'Accessories', brand: 'Stiiizy', price: 25, thc: 'N/A', inStock: true },
-  { id: '9', name: 'Elderberry Gummies', category: 'Edibles', brand: 'Wyld', price: 24, thc: '100mg', inStock: true },
-  { id: '10', name: 'OG Kush 3.5g', category: 'Flower', brand: 'Connected', price: 55, thc: '26%', inStock: false },
-  { id: '11', name: 'Mango Cart 1g', category: 'Concentrates', brand: 'Raw Garden', price: 45, thc: '85%', inStock: true },
-  { id: '12', name: 'Midnight Mint CBN Gummies', category: 'Edibles', brand: 'Camino', price: 22, thc: '5mg+CBN', inStock: true },
+  { id: '1', name: 'Blue Dream Premium Flower', category: 'Flower', brand: 'Cookies', price: 40, thc: '21%', inStock: true, promoted: true },
+  { id: '2', name: 'Watermelon Gummies 100mg', category: 'Edibles', brand: 'Kanha', price: 22, thc: '100mg', inStock: true, promoted: false },
+  { id: '3', name: 'Blood Orange Cardamom', category: 'Drinks', brand: 'Cann', price: 6, thc: '2mg', inStock: true, promoted: false },
+  { id: '4', name: 'Persy Live Rosin', category: 'Concentrates', brand: '710 Labs', price: 75, thc: '78%', inStock: true, promoted: false },
+  { id: '5', name: 'The Indica Smokes 6-Pack', category: 'Pre-rolls', brand: 'Lowell Farms', price: 38, thc: '24%', inStock: true, promoted: false },
+  { id: '6', name: 'Releaf Balm 1:3 CBD', category: 'Topicals', brand: 'Papa & Barkley', price: 34, thc: '60mg', inStock: true, promoted: false },
+  { id: '7', name: '1:1 CBD:THC Drops', category: 'Tinctures', brand: 'Care By Design', price: 38, thc: '150mg', inStock: true, promoted: false },
+  { id: '8', name: 'LIIIL STIIIZY Starter Kit', category: 'Accessories', brand: 'Stiiizy', price: 25, thc: 'N/A', inStock: true, promoted: false },
+  { id: '9', name: 'Elderberry Gummies', category: 'Edibles', brand: 'Wyld', price: 24, thc: '100mg', inStock: true, promoted: false },
+  { id: '10', name: 'OG Kush 3.5g', category: 'Flower', brand: 'Connected', price: 55, thc: '26%', inStock: false, promoted: false },
+  { id: '11', name: 'Mango Cart 1g', category: 'Concentrates', brand: 'Raw Garden', price: 45, thc: '85%', inStock: true, promoted: false },
+  { id: '12', name: 'Midnight Mint CBN Gummies', category: 'Edibles', brand: 'Camino', price: 22, thc: '5mg+CBN', inStock: true, promoted: false },
 ];
 
 const categories = ['All', 'Flower', 'Edibles', 'Drinks', 'Concentrates', 'Pre-rolls', 'Topicals', 'Tinctures', 'Accessories'];
@@ -43,6 +44,10 @@ export default function InventoryPage() {
 
   const toggleStock = (id: string) => {
     setInventory((prev) => prev.map((item) => item.id === id ? { ...item, inStock: !item.inStock } : item));
+  };
+
+  const togglePromoted = (id: string) => {
+    setInventory((prev) => prev.map((item) => item.id === id ? { ...item, promoted: !item.promoted } : item));
   };
 
   const deleteItem = (id: string) => {
@@ -107,6 +112,7 @@ export default function InventoryPage() {
               <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--kanna-text-secondary)' }}>Price</th>
               <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wider hidden md:table-cell" style={{ color: 'var(--kanna-text-secondary)' }}>THC</th>
               <th className="text-center px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--kanna-text-secondary)' }}>Stock</th>
+              <th className="text-center px-4 py-3 text-xs font-semibold uppercase tracking-wider hidden sm:table-cell" style={{ color: 'var(--kanna-text-secondary)' }}>Boost</th>
               <th className="text-right px-4 py-3 text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--kanna-text-secondary)' }}>Actions</th>
             </tr>
           </thead>
@@ -138,6 +144,18 @@ export default function InventoryPage() {
                     }}
                   >
                     {item.inStock ? 'In Stock' : 'Out'}
+                  </button>
+                </td>
+                <td className="px-4 py-4 text-center hidden sm:table-cell">
+                  <button
+                    onClick={() => togglePromoted(item.id)}
+                    className="px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{
+                      background: item.promoted ? 'rgba(212,168,67,0.15)' : 'rgba(138,138,138,0.1)',
+                      color: item.promoted ? 'var(--kanna-gold, #D4A843)' : 'var(--kanna-text-secondary)',
+                    }}
+                  >
+                    {item.promoted ? '⭐ Promoted' : 'Boost'}
                   </button>
                 </td>
                 <td className="px-4 py-4 text-right">

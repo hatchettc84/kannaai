@@ -88,6 +88,8 @@ export interface Product {
   tags: string[];
   rating: number;
   reviewCount: number;
+  dispensaryId?: string;      // which dispensary listed this product
+  promoted?: boolean;         // boosted/featured by dispensary (paid placement)
 }
 
 export interface ProductAvailability {
