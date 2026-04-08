@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, Pressable, Alert } from 'react-native';
+import { View, Text, Pressable, Alert, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,21 +14,19 @@ export default function WelcomeScreen() {
     setIsSigningIn(true);
     try {
       await googleSignIn();
-      // After sign-in, redirect to age gate
       router.replace('/(auth)/age-gate');
     } catch (error: any) {
-      // If Firebase isn't configured, fall back to dev mode
       if (error?.message?.includes('placeholder') || error?.code === 'auth/invalid-api-key') {
         Alert.alert(
           'Firebase Not Configured',
-          'Using dev mode. Add your Firebase config to apps/mobile/.env to enable real Google Sign-In.',
-          [{ text: 'Continue in Dev Mode', onPress: () => {
+          'Using dev mode.',
+          [{ text: 'Continue', onPress: () => {
             devSignIn('Cornelius', 'cornelius@kannaai.com');
             router.replace('/(auth)/age-gate');
           }}]
         );
       } else {
-        Alert.alert('Sign-In Failed', error?.message || 'Something went wrong. Please try again.');
+        Alert.alert('Sign-In Failed', error?.message || 'Something went wrong.');
       }
     } finally {
       setIsSigningIn(false);
@@ -41,55 +39,37 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-kanna-bg">
-      <View className="flex-1 items-center justify-center px-8">
-        {/* Logo */}
-        <View className="w-28 h-28 rounded-full bg-kanna-green/20 items-center justify-center mb-6">
-          <Text className="text-6xl">🌿</Text>
-        </View>
+    <View className="flex-1" style={{ backgroundColor: '#1A1A1A' }}>
+      {/* Background image area — dark cannabis leaf aesthetic */}
+      <View className="flex-1 items-center justify-end pb-12 px-8" style={{ backgroundColor: '#2D3B2A' }}>
+        {/* Overlay gradient effect */}
+        <View className="absolute inset-0" style={{ backgroundColor: 'rgba(42, 60, 38, 0.85)' }} />
 
-        <Text className="text-white font-bold text-4xl mb-2">KannaAI</Text>
-        <Text className="text-kanna-green text-lg font-semibold mb-4">
-          Your Personal Cannabis Concierge
-        </Text>
-        <Text className="text-kanna-text-secondary text-center text-sm leading-5 mb-12 max-w-[280px]">
-          Tell Kanna how you feel, and she'll recommend the perfect strain and find a dispensary near you.
-        </Text>
-
-        {/* Google Sign-In — Primary CTA */}
-        <Pressable
-          onPress={handleGoogleSignIn}
-          disabled={isSigningIn}
-          className={`w-full rounded-2xl py-4 flex-row items-center justify-center gap-3 mb-3 ${
-            isSigningIn ? 'bg-kanna-surface' : 'bg-white'
-          }`}
-        >
-          <Ionicons name="logo-google" size={22} color={isSigningIn ? '#8a8aa3' : '#4285F4'} />
-          <Text className={`font-bold text-base ${isSigningIn ? 'text-kanna-text-secondary' : 'text-gray-800'}`}>
-            {isSigningIn ? 'Signing in...' : 'Continue with Google'}
+        {/* Content */}
+        <View className="z-10 items-center w-full">
+          <Text className="text-5xl font-bold mb-3" style={{ color: '#F8F7F4', fontFamily: 'serif' }}>
+            KannaAI
           </Text>
-        </Pressable>
+          <Text className="text-sm text-center mb-2" style={{ color: 'rgba(248,247,244,0.7)' }}>
+            Get connected to the{'\n'}best cannabis concierge{'\n'}in your local area
+          </Text>
 
-        {/* Apple Sign-In */}
-        <Pressable
-          onPress={handleDevSignIn}
-          className="bg-kanna-surface w-full rounded-2xl py-4 flex-row items-center justify-center gap-3 mb-3"
-        >
-          <Ionicons name="logo-apple" size={22} color="#ffffff" />
-          <Text className="text-white font-semibold text-base">Continue with Apple</Text>
-        </Pressable>
+          <Pressable
+            onPress={handleGoogleSignIn}
+            disabled={isSigningIn}
+            className="w-full rounded-2xl py-4 flex-row items-center justify-center gap-3 mt-8 border"
+            style={{ borderColor: 'rgba(248,247,244,0.3)', backgroundColor: 'rgba(74,103,65,0.6)' }}
+          >
+            <Text className="font-bold text-base" style={{ color: '#F8F7F4' }}>
+              {isSigningIn ? 'Signing in...' : 'Get started'} →
+            </Text>
+          </Pressable>
 
-        {/* Dev mode skip */}
-        <Pressable onPress={handleDevSignIn} className="mt-4">
-          <Text className="text-kanna-text-secondary text-sm underline">Skip (Dev Mode)</Text>
-        </Pressable>
+          <Pressable onPress={handleDevSignIn} className="mt-4">
+            <Text className="text-xs" style={{ color: 'rgba(248,247,244,0.5)' }}>Skip (Dev Mode)</Text>
+          </Pressable>
+        </View>
       </View>
-
-      <View className="px-8 pb-4">
-        <Text className="text-kanna-text-secondary text-xs text-center">
-          By continuing, you agree to our Terms of Service and Privacy Policy
-        </Text>
-      </View>
-    </SafeAreaView>
+    </View>
   );
 }

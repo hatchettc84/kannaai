@@ -14,7 +14,6 @@ export default function ChatScreen() {
   const flatListRef = useRef<FlatList>(null);
   const greetingSet = useRef(false);
 
-  // Personalize greeting when user name is available
   useEffect(() => {
     if (userName && !greetingSet.current) {
       setGreeting(userName);
@@ -37,21 +36,23 @@ export default function ChatScreen() {
   return (
     <SafeAreaView className="flex-1 bg-kanna-bg" edges={['top']}>
       {/* Header */}
-      <View className="flex-row items-center px-5 py-3 border-b border-white/5">
-        <Text className="text-2xl mr-2">🌿</Text>
+      <View className="flex-row items-center px-5 py-3 border-b" style={{ borderColor: '#F2F2F0' }}>
+        <View className="w-9 h-9 rounded-full items-center justify-center mr-3" style={{ backgroundColor: '#4A6741' }}>
+          <Text className="text-white text-sm font-bold">K</Text>
+        </View>
         <View className="flex-1">
-          <Text className="text-white font-bold text-lg">Kanna</Text>
-          <Text className="text-kanna-text-secondary text-xs">
+          <Text className="font-bold text-base" style={{ color: '#1A1A1A' }}>Kanna</Text>
+          <Text className="text-[10px]" style={{ color: useRealAI ? '#5B8C51' : '#8A8A8A' }}>
             {useRealAI ? 'AI Powered' : 'Demo Mode'}
           </Text>
         </View>
-        <Pressable onPress={toggleAI} className="mr-3 px-3 py-1.5 rounded-full bg-kanna-surface">
-          <Text className={`text-xs font-semibold ${useRealAI ? 'text-kanna-green' : 'text-kanna-text-secondary'}`}>
+        <Pressable onPress={toggleAI} className="mr-3 px-3 py-1.5 rounded-full" style={{ backgroundColor: '#F2F2F0' }}>
+          <Text className="text-[10px] font-semibold" style={{ color: useRealAI ? '#4A6741' : '#8A8A8A' }}>
             {useRealAI ? 'AI ON' : 'DEMO'}
           </Text>
         </Pressable>
         <Pressable onPress={clearChat}>
-          <Ionicons name="create-outline" size={22} color="#8a8aa3" />
+          <Ionicons name="create-outline" size={20} color="#8A8A8A" />
         </Pressable>
       </View>
 
@@ -66,13 +67,16 @@ export default function ChatScreen() {
           renderItem={renderMessage}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 16, paddingBottom: 8 }}
+          style={{ backgroundColor: '#F8F7F4' }}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             isLoading ? (
               <View className="flex-row items-center gap-2 mb-4 ml-1">
-                <Text className="text-lg">🌿</Text>
-                <ActivityIndicator size="small" color="#2ecc71" />
-                <Text className="text-kanna-text-secondary text-xs">Kanna is thinking...</Text>
+                <View className="w-7 h-7 rounded-full items-center justify-center" style={{ backgroundColor: '#4A6741' }}>
+                  <Text className="text-white text-[10px] font-bold">K</Text>
+                </View>
+                <ActivityIndicator size="small" color="#4A6741" />
+                <Text className="text-xs" style={{ color: '#8A8A8A' }}>Kanna is thinking...</Text>
               </View>
             ) : null
           }

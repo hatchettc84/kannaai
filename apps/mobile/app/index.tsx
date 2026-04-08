@@ -21,5 +21,5 @@ export default function Index() {
     return <Redirect href="/(auth)/age-gate" />;
   }
 
-  return <Redirect href="/(tabs)/chat" />;
+  return <Redirect href="/(tabs)/home" />;
 }
