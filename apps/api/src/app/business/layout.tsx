@@ -55,8 +55,13 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
   }
 
   // Not logged in — redirect to login
+  useEffect(() => {
+    if (checked && !session && pathname !== '/business/login') {
+      router.replace('/business/login');
+    }
+  }, [checked, session, pathname, router]);
+
   if (!session) {
-    router.replace('/business/login');
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--kanna-bg)' }}>
         <span className="text-2xl">🌿</span>
