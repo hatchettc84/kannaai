@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String         @id @default(cuid())
+  email             String         @unique
+  clerkId           String         @unique
+  name              String?
+  dateOfBirth       DateTime?
+  ageVerified       Boolean        @default(false)
+  toleranceLevel    String?
+  preferredTypes    String[]
+  medicalConditions String[]
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  conversations     Conversation[]
+  favorites         Favorite[]
+}
+
+model Strain {
+  id          String                @id @default(cuid())
+  name        String
+  type        String
+  thcMin      Float?
+  thcMax      Float?
+  cbdMin      Float?
+  cbdMax      Float?
+  effects     String[]
+  flavors     String[]
+  terpenes    String[]
+  description String?
+  imageUrl    String?
+  createdAt   DateTime              @default(now())
+  favorites   Favorite[]
+  inventory   DispensaryInventory[]
+}
+
+model Dispensary {
+  id            String                @id @default(cuid())
+  name          String
+  address       String
+  city          String
+  state         String
+  zipCode       String
+  latitude      Float
+  longitude     Float
+  phone         String?
+  website       String?
+  hoursJson     Json?
+  isVerified    Boolean               @default(false)
+  licenseNumber String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  inventory     DispensaryInventory[]
+}
+
+model DispensaryInventory {
+  id           String     @id @default(cuid())
+  dispensaryId String
+  strainId     String
+  priceEighth  Float?
+  priceQuarter Float?
+  priceHalf    Float?
+  priceOunce   Float?
+  inStock      Boolean    @default(true)
+  updatedAt    DateTime   @updatedAt
+  dispensary   Dispensary @relation(fields: [dispensaryId], references: [id])
+  strain       Strain     @relation(fields: [strainId], references: [id])
+
+  @@unique([dispensaryId, strainId])
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  role           String
+  content        String
+  metadata       Json?
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  strainId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  strain    Strain   @relation(fields: [strainId], references: [id])
+
+  @@unique([userId, strainId])
+}
