@@ -28,6 +28,7 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
   const [session, setSession] = useState<BizSession | null>(null);
   const [checked, setChecked] = useState(false);
 
+  // Load session from localStorage
   useEffect(() => {
     const stored = localStorage.getItem('biz_session');
     if (stored) {
@@ -40,39 +41,31 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
     setChecked(true);
   }, [pathname]);
 
-  // Login page — no auth required
-  if (pathname === '/business/login') {
-    return <>{children}</>;
-  }
-
-  // Not checked yet — show nothing to prevent flash
-  if (!checked) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--kanna-bg)' }}>
-        <span className="text-2xl">🌿</span>
-      </div>
-    );
-  }
-
-  // Not logged in — redirect to login
+  // Redirect to login if not authenticated
   useEffect(() => {
     if (checked && !session && pathname !== '/business/login') {
       router.replace('/business/login');
     }
   }, [checked, session, pathname, router]);
 
-  if (!session) {
+  const handleLogout = () => {
+    localStorage.removeItem('biz_session');
+    router.push('/business/login');
+  };
+
+  // Login page — no layout needed
+  if (pathname === '/business/login') {
+    return <>{children}</>;
+  }
+
+  // Loading or not authenticated — show spinner
+  if (!checked || !session) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--kanna-bg)' }}>
         <span className="text-2xl">🌿</span>
       </div>
     );
   }
-
-  const handleLogout = () => {
-    localStorage.removeItem('biz_session');
-    router.push('/business/login');
-  };
 
   return (
     <div className="flex h-screen" style={{ background: 'var(--kanna-bg)' }}>
