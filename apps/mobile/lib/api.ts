@@ -1,6 +1,6 @@
 import { auth } from './firebase';
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'https://kannaai.vercel.app';
 
 interface ChatResponse {
   id: string;
