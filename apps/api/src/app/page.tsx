@@ -20,7 +20,7 @@ export default function Home() {
         </p>
 
         <a
-          href="https://www.kannai.com"
+          href="https://www.kannaai.com"
           className="px-8 py-4 rounded-2xl text-base font-bold inline-block mb-4"
           style={{ background: 'var(--kanna-green)', color: 'var(--kanna-bg)' }}
         >
@@ -29,7 +29,7 @@ export default function Home() {
 
         <div className="flex gap-3 justify-center mb-4">
           <a
-            href="https://biz.kannai.com"
+            href="https://biz.kannaai.com"
             className="text-sm underline"
             style={{ color: 'var(--kanna-text-secondary)' }}
           >
@@ -62,7 +62,7 @@ export default function Home() {
           List your products on KannaAI, manage inventory, run promotions, and get discovered by customers through AI-powered recommendations.
         </p>
         <a
-          href="https://biz.kannai.com"
+          href="https://biz.kannaai.com"
           className="px-6 py-3 rounded-2xl text-sm font-bold inline-block"
           style={{ background: 'var(--kanna-green)', color: 'var(--kanna-bg)' }}
         >

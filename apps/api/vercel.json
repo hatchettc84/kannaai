@@ -5,7 +5,7 @@
       "has": [
         {
           "type": "host",
-          "value": "biz.kannai.com"
+          "value": "biz.kannaai.com"
         }
       ],
       "destination": "/business/:path*"
