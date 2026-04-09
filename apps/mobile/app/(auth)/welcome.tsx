@@ -5,7 +5,8 @@ import { useRouter } from 'expo-router';
 import { useAuthStore } from '../../lib/stores/authStore';
 import { CannabisLeaf } from '../../components/CannabisLeaf';
 
-const VIDEO_URL = 'https://videos.pexels.com/video-files/3576880/3576880-sd_640_360_30fps.mp4';
+// Self-hosted on our API domain — replace cannabis-bg.mp4 with a real dispensary video
+const VIDEO_URL = 'https://kannaai.vercel.app/cannabis-bg.mp4';
 
 function VideoBackground() {
   if (Platform.OS !== 'web') return null;
