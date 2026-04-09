@@ -8,11 +8,11 @@ const heroVideos = [
 ];
 
 const productShowcase = [
-  { image: 'https://images.unsplash.com/photo-1603909223429-69bb7101f420?w=500&q=80', title: 'Premium Flower', subtitle: 'Hand-trimmed buds from local growers' },
-  { image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500&q=80', title: 'Gourmet Edibles', subtitle: 'Precisely dosed gummies and treats' },
-  { image: 'https://images.unsplash.com/photo-1616690002498-89e8e49710c2?w=500&q=80', title: 'Concentrates', subtitle: 'Solventless rosin and live resin' },
-  { image: 'https://images.unsplash.com/photo-1587754363852-38aea7b85822?w=500&q=80', title: 'Pre-Rolls', subtitle: 'Ready to enjoy, crafted with care' },
-  { image: 'https://images.unsplash.com/photo-1584467541268-b040f83be49e?w=500&q=80', title: 'Tinctures & Oils', subtitle: 'CBD and THC drops for daily wellness' },
+  { image: 'https://images.pexels.com/photos/7667720/pexels-photo-7667720.jpeg?auto=compress&w=500', title: 'Premium Flower', subtitle: 'Hand-trimmed buds from local growers' },
+  { image: 'https://images.pexels.com/photos/7667906/pexels-photo-7667906.jpeg?auto=compress&w=500', title: 'Gourmet Edibles', subtitle: 'Precisely dosed gummies and treats' },
+  { image: 'https://images.pexels.com/photos/7667731/pexels-photo-7667731.jpeg?auto=compress&w=500', title: 'Concentrates', subtitle: 'Solventless rosin and live resin' },
+  { image: 'https://images.pexels.com/photos/7667912/pexels-photo-7667912.jpeg?auto=compress&w=500', title: 'Pre-Rolls', subtitle: 'Ready to enjoy, crafted with care' },
+  { image: 'https://images.pexels.com/photos/7667714/pexels-photo-7667714.jpeg?auto=compress&w=500', title: 'Tinctures & Oils', subtitle: 'CBD and THC drops for daily wellness' },
 ];
 
 export default function Home() {
