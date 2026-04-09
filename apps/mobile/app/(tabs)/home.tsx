@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useAuthStore } from '../../lib/stores/authStore';
 import { useLocationStore } from '../../lib/stores/locationStore';
+import { CannabisLeaf } from '../../components/CannabisLeaf';
 import { mockProducts } from '../../lib/mock/products';
 import type { Product } from '@kannaai/shared';
 
@@ -131,7 +132,7 @@ export default function HomeScreen() {
         {/* Header */}
         <View className="flex-row items-center px-5 pt-3 pb-4">
           <View className="w-10 h-10 rounded-full items-center justify-center mr-3" style={{ backgroundColor: '#D4E8CD' }}>
-            <Text className="text-lg">🌿</Text>
+            <CannabisLeaf size={24} color="#4A6741" />
           </View>
           <View className="flex-1">
             <Text className="text-lg font-bold" style={{ color: '#1A1A1A' }}>

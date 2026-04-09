@@ -3,6 +3,7 @@ import { View, Text, Pressable, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../../lib/stores/authStore';
+import { CannabisLeaf } from '../../components/CannabisLeaf';
 
 const VIDEO_URL = 'https://videos.pexels.com/video-files/3576880/3576880-sd_640_360_30fps.mp4';
 
@@ -93,7 +94,9 @@ export default function WelcomeScreen() {
         <View className="flex-1 items-center justify-end pb-12 px-8" style={{ zIndex: 10 }}>
           <View className="items-center w-full">
             {/* Logo leaf */}
-            <Text className="text-4xl mb-4">🌿</Text>
+            <View className="mb-4">
+              <CannabisLeaf size={56} color="#F8F7F4" />
+            </View>
 
             <Text className="text-5xl font-bold mb-3" style={{ color: '#F8F7F4', fontFamily: 'Georgia, serif' }}>
               KannaAI

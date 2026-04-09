@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthStore } from '../../lib/stores/authStore';
 import { useChatStore } from '../../lib/stores/chatStore';
+import { CannabisLeaf } from '../../components/CannabisLeaf';
 
 const menuItems = [
   { icon: 'heart-outline' as const, label: 'Favorite Strains' },
@@ -34,7 +35,7 @@ export default function ProfileScreen() {
           {/* Avatar & Name */}
           <View className="items-center mb-8">
             <View className="w-20 h-20 rounded-full items-center justify-center mb-3" style={{ backgroundColor: '#D4E8CD' }}>
-              <Text className="text-3xl">🌿</Text>
+              <CannabisLeaf size={44} color="#4A6741" />
             </View>
             <Text className="text-xl font-bold" style={{ color: '#1A1A1A' }}>{user?.name || 'Cannabis Enthusiast'}</Text>
             <Text className="text-sm mt-1" style={{ color: '#8A8A8A' }}>{user?.email || 'Member since 2026'}</Text>
