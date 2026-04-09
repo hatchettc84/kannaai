@@ -19,6 +19,14 @@ export default function Home() {
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
+    // Auto-redirect mobile browsers to the app
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile && typeof window !== 'undefined') {
+      window.location.href = 'https://app.kannaai.com';
+    }
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % productShowcase.length);
     }, 3500);
