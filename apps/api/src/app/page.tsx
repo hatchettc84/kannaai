@@ -71,7 +71,7 @@ export default function Home() {
           </p>
 
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="#download" style={{
+            <a href="https://app.kannaai.com" style={{
               background: '#4A6741', color: '#fff',
               padding: '16px 32px', borderRadius: 16,
               fontSize: 16, fontWeight: 700, textDecoration: 'none',
